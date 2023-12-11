@@ -15,7 +15,7 @@ const config = {
 
     // The url for your site: <url>/<baseUrl>/
     url: 'https://james-ansley.github.io',  // set this
-    baseUrl: '/python-docusaurus-template/',  // set this
+    baseUrl: '/',  // set this
 
     // (optional) GitHub pages deployment config.
     organizationName: 'James-Ansley',  // set this – GitHub Org or Username
