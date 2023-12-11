@@ -81,6 +81,9 @@ export default function CodeEditor(props) {
         isLoading,
         isRunning,
         interruptExecution,
+        isAwaitingInput,
+        sendInput,
+        prompt
     } = usePython();
 
     const {colorMode} = useColorMode();
@@ -198,4 +201,6 @@ export default function CodeEditor(props) {
             </div>
         )}
     </BrowserOnly>
+          {isAwaitingInput && <Input prompt={prompt} onSubmit={sendInput} />}
+
 }
