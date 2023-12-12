@@ -198,9 +198,13 @@ export default function CodeEditor(props) {
                     </div>
                 </div>
                 {showOutput && output()}
+                <input type="text" id="fname" name="fname" value={prompt} />
             </div>
         )}
+            
+
     </BrowserOnly>
+
           {isAwaitingInput && <span>hello</span>}
 
 }
