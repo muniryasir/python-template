@@ -68,6 +68,8 @@ export default function CodeEditor(props) {
     const [showOutput, setShowOutput] = useState(false);
     const [playFocus, setplayFocus] = useState(false);
     const [resetFocus, setresetFocus] = useState(false);
+    const [promptInput, setpromptInput] = useState('');
+
 
     useEffect(() => {
         setInput(props.code.trimEnd());
@@ -96,6 +98,15 @@ export default function CodeEditor(props) {
         require("ace-builds/src-noconflict/theme-textmate");
         require("ace-builds/src-noconflict/theme-idle_fingers");
         require("ace-builds/src-noconflict/ext-language_tools");
+    }
+
+    function onChangeIS (event) {
+        setpromptInput(event.target.value)
+    }
+
+    function handleInputSubmission() {
+        sendInput(promptInput)
+
     }
 
     function reset() {
@@ -198,7 +209,9 @@ export default function CodeEditor(props) {
                     </div>
                 </div>
                 {showOutput && output()}
-                <input type="text" id="fname" name="fname" value={prompt} />
+                <input type="text" id="fname" name="fname" defaultValue={prompt} onChange={onChangeIS} />
+                <button type="button" onClick={handleInputSubmission}>Submit Input</button>
+
             </div>
         )}
             
