@@ -201,6 +201,6 @@ export default function CodeEditor(props) {
             </div>
         )}
     </BrowserOnly>
-          {isAwaitingInput && <Input prompt={prompt} onSubmit={sendInput} />}
+          {isAwaitingInput && <span>hello</span>}
 
 }
