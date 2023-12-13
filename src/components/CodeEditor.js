@@ -4,7 +4,23 @@ import useIsBrowser from '@docusaurus/useIsBrowser';
 import {useColorMode} from '@docusaurus/theme-common';
 import {usePython} from "react-py";
 
+import { styled } from '@mui/material/styles';
+
+import Stack from '@mui/material/Stack';
+
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
 import "./CodeEditor.css"
+
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
 const editorOptions = {
     enableBasicAutocompletion: false,
@@ -69,11 +85,13 @@ export default function CodeEditor(props) {
     const [playFocus, setplayFocus] = useState(false);
     const [resetFocus, setresetFocus] = useState(false);
     const [promptInput, setpromptInput] = useState('');
+    const [example, setExample] = useState('')
+    const [code, setCode] = useState('')
 
 
     useEffect(() => {
         setInput(props.code.trimEnd());
-        setShowOutput(false)
+        setShowOutput(true)
     }, [props.code])
 
     const {
@@ -108,6 +126,126 @@ export default function CodeEditor(props) {
         sendInput(promptInput)
 
     }
+
+    function handleItemClick (e)  {
+        let value = e.target.id
+        if(value == "1") {
+          let primenumbers = 
+  `
+# Program to check if a number is prime or not
+
+num = 29
+
+# To take input from the user
+#num = int(input("Enter a number: "))
+
+# define a flag variable
+flag = False
+
+if num == 1:
+    print(num, "is not a prime number")
+elif num > 1:
+# check for factors
+    for i in range(2, num):
+        if (num % i) == 0:
+            # if factor is found, set flag to True
+            flag = True
+            # break out of loop
+            break
+
+# check if flag is True
+if flag:
+    print(num, "is not a prime number")
+else:
+    print(num, "is a prime number")
+  `
+          
+          setInput(primenumbers)
+
+        } else if(value == '2') {
+          let factoralNumber = 
+          `
+# Python program to find the factorial of a number provided by the user.
+
+# change the value for a different result
+num = 7
+
+# To take input from the user
+#num = int(input("Enter a number: "))
+
+factorial = 1
+
+# check if the number is negative, positive or zero
+if num < 0:
+    print("Sorry, factorial does not exist for negative numbers")
+elif num == 0:
+    print("The factorial of 0 is 1")
+else:
+    for i in range(1,num + 1):
+        factorial = factorial*i
+    print("The factorial of",num,"is",factorial)
+          `
+          setInput(factoralNumber)
+
+        } else if(value == '3') {
+          let matrixMultiplication = 
+          `
+# Program to multiply two matrices using nested loops
+
+# 3x3 matrix
+X = [[12,7,3],
+    [4 ,5,6],
+    [7 ,8,9]]
+# 3x4 matrix
+Y = [[5,8,1,2],
+    [6,7,3,0],
+    [4,5,9,1]]
+# result is 3x4
+result = [[0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0]]
+
+# iterate through rows of X
+for i in range(len(X)):
+    # iterate through columns of Y
+    for j in range(len(Y[0])):
+        # iterate through rows of Y
+        for k in range(len(Y)):
+            result[i][j] += X[i][k] * Y[k][j]
+
+for r in result:
+    print(r)
+  
+          `
+
+          setInput(matrixMultiplication)
+        } else if(value=='4') {
+
+            let simpleInput = `
+# Simple Input
+print('Enter input:')
+x  = input()
+print(x)
+                    `;
+            setInput(simpleInput);
+
+        } else if(value=='5') {
+
+            let simpleAddition = `
+# Simple Addition between two input numbers 
+print('Enter first Number:')
+x  = input()
+print('Enter Second Number:')
+y = input()
+print('sum:')
+print(int(x)+int(y))
+                    `;
+            setInput(simpleAddition);
+
+        }
+
+
+      }
 
     function reset() {
         setShowOutput(false);
@@ -173,6 +311,15 @@ export default function CodeEditor(props) {
         );
     }
 
+    function showPrompt() {
+        return (
+            <div>
+            <input type="text" id="fname" name="fname" defaultValue={prompt} onChange={onChangeIS} />
+            <button type="button" onClick={handleInputSubmission}>Submit Input</button>
+            </div>
+        );
+    }
+
     function editor() {
         return <AceEditor
             value={input}
@@ -202,22 +349,37 @@ export default function CodeEditor(props) {
                 setplayFocus(false);
                 setresetFocus(false);
             }}>
-                <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
+                <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid xs={6}>
+        <Stack direction="row" spacing={2}>
+                  <Item id="1" onClick={handleItemClick}>Example 1</Item>
+                  <Item id="2" onClick={handleItemClick}>Example 2 </Item>
+                  <Item id="3" onClick={handleItemClick}>Example 3</Item>
+                  <Item id="4" onClick={handleItemClick}>Example 4</Item>
+                  <Item id="5" onClick={handleItemClick}>Example 5</Item>
+                </Stack>
+        <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
                     {editor()}
                     <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
                         {isLoading ? <span>Loading...</span> : buttons()}
                     </div>
                 </div>
-                {showOutput && output()}
-                <input type="text" id="fname" name="fname" defaultValue={prompt} onChange={onChangeIS} />
-                <button type="button" onClick={handleInputSubmission}>Submit Input</button>
-
+        </Grid>
+        <Grid xs={6}>
+        {showOutput && output()}
+        </Grid>
+        {isAwaitingInput && showPrompt()}
+      </Grid>
+    </Box>
+             
+   
             </div>
         )}
             
 
     </BrowserOnly>
 
-          {isAwaitingInput && <span>hello</span>}
+          
 
 }

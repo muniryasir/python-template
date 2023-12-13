@@ -27,12 +27,12 @@ bar()
 
 export default function Home() {
     return (
-        <Layout title="Python Docusaurus Template">
+        <Layout title="Python IDE">
             <main>
                 <div className={styles.heroContainer}>
-                    <h1>Python Docusaurus Template</h1>
-                    <p className={styles.tagline}>A no-nonsense markdown-only template with runnable and editable Python code blocks</p>
-                    <Link className={"button button--primary"} href={"docs/intro"}>Get Started</Link>
+                    <h1>Python IDE</h1>
+                    {/* <p className={styles.tagline}>A no-nonsense markdown-only template with runnable and editable Python code blocks</p> */}
+                    {/* <Link className={"button button--primary"} href={"docs/intro"}>Get Started</Link> */}
                     <div className={styles.codeEditorWrapper}>
                         <CodeEditor code={code} showButtons/>
                     </div>

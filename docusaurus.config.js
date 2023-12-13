@@ -60,44 +60,44 @@ const config = {
             // set this – navbar items
             // See: https://docusaurus.io/docs/api/themes/configuration#navbar
             navbar: {
-                title: 'Python Docusaurus Template',  // set this
+                title: 'Python IDE',  // set this
                 logo: {
                     alt: 'My Site Logo',
                     src: 'img/logo.svg',
                 },
-                items: [
-                    {
-                        type: 'doc',
-                        docId: 'intro',  // set this to your main docs page name
-                        position: 'left',
-                        label: 'Get Started',
-                    },
-                    {
-                        href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
-                        label: 'GitHub',
-                        position: 'right',
-                    },
-                ],
+                // items: [
+                //     {
+                //         type: 'doc',
+                //         docId: 'intro',  // set this to your main docs page name
+                //         position: 'left',
+                //         label: 'Get Started',
+                //     },
+                //     {
+                //         href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
+                //         label: 'GitHub',
+                //         position: 'right',
+                //     },
+                // ],
             },
             // set this – to the links you want
             // See: https://docusaurus.io/docs/api/themes/configuration#footer-1
-            footer: {
-                style: 'light',
-                links: [
-                    {
-                        label: 'Get Started',
-                        to: '/docs/intro',
-                    },
-                    {
-                        label: 'GitHub',
-                        href: 'https://github.com/James-Ansley/python-docusaurus-template',
-                    },
-                ],
-                // set this
-                copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-            },
+            // footer: {
+            //     style: 'light',
+            //     links: [
+            //         {
+            //             label: 'Get Started',
+            //             to: '/docs/intro',
+            //         },
+            //         {
+            //             label: 'GitHub',
+            //             href: 'https://github.com/James-Ansley/python-docusaurus-template',
+            //         },
+            //     ],
+            //     // set this
+            //     copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+            // },
             prism: {
-                theme: prismThemes.github,
+                // theme: prismThemes.github,
                 darkTheme: prismThemes.dracula,
             },
         }),
@@ -128,16 +128,16 @@ const config = {
         },
     ],
 
-    themes: [
-        [
-            require.resolve("@easyops-cn/docusaurus-search-local"),
-            /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
-            ({
-                hashed: true,
-                indexBlog: false,
-            }),
-        ],
-    ],
+    // themes: [
+    //     [
+    //         require.resolve("@easyops-cn/docusaurus-search-local"),
+    //         /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+    //         ({
+    //             hashed: true,
+    //             indexBlog: false,
+    //         }),
+    //     ],
+    // ],
 };
 
 export default config;
