@@ -123,7 +123,9 @@ export default function CodeEditor(props) {
     }
 
     function handleInputSubmission() {
-        sendInput(promptInput)
+        // alert(prompt)
+        // alert()
+        sendInput(promptInput.replace(prompt,'').trim())
 
     }
 
