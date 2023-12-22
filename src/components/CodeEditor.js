@@ -13,6 +13,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import "./CodeEditor.css"
 
+import axios from "axios";
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -126,6 +128,18 @@ export default function CodeEditor(props) {
         // alert(prompt)
         // alert()
         sendInput(promptInput.replace(prompt,'').trim())
+
+    }
+    
+    function handleAIFeedback() {
+        let code = {code: encodeURIComponent(input)}
+        console.log('sent')
+        axios
+        .get("https://ai-api-alpha.vercel.app/api/aifeedback?question=%27Hello%27")
+        .then(data => console.log(data.data))
+        .catch(error => console.log(error));
+        // alert()
+        
 
     }
 
@@ -309,6 +323,8 @@ print(int(x)+int(y))
             <pre className={"output-window"}>
                 <span>{stdout}</span>
                 <span style={{color: "var(--text-code-error)"}}>{stderr}</span>
+                {stdout && showAIButton()}
+
             </pre>
         );
     }
@@ -318,6 +334,14 @@ print(int(x)+int(y))
             <div>
             <input type="text" id="fname" name="fname" defaultValue={prompt} onChange={onChangeIS} />
             <button type="button" onClick={handleInputSubmission}>Submit Input</button>
+            </div>
+        );
+    }
+
+    function showAIButton() {
+        return (
+            <div>
+                <button type="button" onClick={handleAIFeedback}>Get AI feedback</button>
             </div>
         );
     }
