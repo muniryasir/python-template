@@ -134,8 +134,11 @@ export default function CodeEditor(props) {
     function handleAIFeedback() {
         let code = {code: encodeURIComponent(input)}
         console.log('sent')
+        const data = {
+            code: code,
+        };
         axios
-        .get("https://ai-api-alpha.vercel.app/api/aifeedback?question=%27Hello%27")
+        .put("https://ai-api-alpha.vercel.app/api/aifeedback", data)
         .then(data => console.log(data.data))
         .catch(error => console.log(error));
         // alert()
