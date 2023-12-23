@@ -137,8 +137,13 @@ export default function CodeEditor(props) {
         const data = {
             code: code,
         };
+        let headerconfig =  {
+            headers: {
+            'Content-Type': 'application/json'
+            }
+          };
         axios
-        .post("https://ai-api-alpha.vercel.app/api/aifeedback", data)
+        .post("https://ai-api-alpha.vercel.app/api/aifeedback", data, headerconfig)
         .then(data => console.log(data.data))
         .catch(error => console.log(error));
         // alert()
