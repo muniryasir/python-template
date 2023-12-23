@@ -138,13 +138,13 @@ export default function CodeEditor(props) {
         const data = {
             code,
         };
-        let headerconfig =  {
-            headers: {
-            'Content-Type': 'application/json'
-            }
-          };
+        // let headerconfig =  {
+        //     headers: {
+        //     'Content-Type': 'application/json'
+        //     }
+        //   };
         axios
-        .put("https://ai-api-alpha.vercel.app/api/aicodeevaluation", data, headerconfig)
+        .put("https://ai-api-alpha.vercel.app/api/aicodeevaluation", 'data')
         .then(data => console.log(data.data))
         .catch(error => console.log(error));
         // let urlstring = `https://ai-api-alpha.vercel.app/api/aifeedback?code=\'${encodeURIComponent(input)}\'`
