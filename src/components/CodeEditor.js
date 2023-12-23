@@ -132,7 +132,8 @@ export default function CodeEditor(props) {
     }
     
     function handleAIFeedback() {
-        let code = {code: encodeURIComponent(input)}
+        // let code = {code: encodeURIComponent(input)}
+        
         console.log('sent')
         // const data = {
         //     code: code,
@@ -146,7 +147,7 @@ export default function CodeEditor(props) {
         // .post("https://ai-api-alpha.vercel.app/api/aifeedback", data, headerconfig)
         // .then(data => console.log(data.data))
         // .catch(error => console.log(error));
-        let urlstring = `https://ai-api-alpha.vercel.app/api/aifeedback?code=${code}`
+        let urlstring = `https://ai-api-alpha.vercel.app/api/aifeedback?code=\'${encodeURIComponent(input)}\'`
         axios.get(urlstring)
         .then(data => console.log(data.data))
         .catch(error => console.log(error));
