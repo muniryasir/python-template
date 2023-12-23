@@ -144,7 +144,7 @@ export default function CodeEditor(props) {
         //     }
         //   };
         axios
-        .post("https://ai-api-alpha.vercel.app/api/aifeedback", data, headerconfig)
+        .put("https://ai-api-alpha.vercel.app/api/aifeedback", data, headerconfig)
         .then(data => console.log(data.data))
         .catch(error => console.log(error));
         // let urlstring = `https://ai-api-alpha.vercel.app/api/aifeedback?code=\'${encodeURIComponent(input)}\'`
