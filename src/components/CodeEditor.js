@@ -89,6 +89,8 @@ export default function CodeEditor(props) {
     const [promptInput, setpromptInput] = useState('');
     const [example, setExample] = useState('')
     const [code, setCode] = useState('')
+    const [aiFeedback, setAIFeedback] = useState(false)
+    const [aiFeedbackValue, setAIFeedbackValue] = useState('')
 
 
     useEffect(() => {
@@ -132,27 +134,67 @@ export default function CodeEditor(props) {
     }
     
     function handleAIFeedback() {
-        let code = {code: encodeURIComponent(input)}
+        let code = {code: input}
         
         console.log('sent')
-        const data = {
-            code,
-        };
+        // const data = {
+        //     code,
+        // };
         // let headerconfig =  {
-        //     headers: {
-        //     'Content-Type': 'application/json'
-        //     }
+            
+        //     'Content-Type': 'application/json; charset=utf-8',
+        //     "Access-Control-Allow-Credentials": "true" ,
+        //     "Access-Control-Allow-Origin" :"*" , // replace this your actual origin
+        //     "Access-Control-Allow-Methods": "GET,DELETE,PATCH,POST,PUT" ,
+        //     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With" ,
+        //     "Cache-Control": "public, max-age=0, must-revalidate",
+        //     "Connection":"keep-alive"
+            
         //   };
-        axios
-        .put("https://ai-api-alpha.vercel.app/api/aicodeevaluation", 'data')
-        .then(data => console.log(data.data))
-        .catch(error => console.log(error));
-        // let urlstring = `https://ai-api-alpha.vercel.app/api/aifeedback?code=\'${encodeURIComponent(input)}\'`
-        // axios.get(urlstring)
+        // let headerconfig = {
+        //     "Access-Control-Allow-Origin": "*",
+        //     "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        //     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+        // };
+
+        // axios
+        // .put("https://ai-api-alpha.vercel.app/api/aicodeevaluation", code, headerconfig)
         // .then(data => console.log(data.data))
         // .catch(error => console.log(error));
+        let urlstring = `https://ai-api-alpha.vercel.app/api/aicodeevaluation?question=${JSON.stringify(code)}`
+        // let urlstring = `http://localhost:3001/api/aicodeevaluation?question=${JSON.stringify(code)}`
+        axios.get(urlstring)
+        .then((data) => { 
+            console.log(data.data)
+            setAIFeedback(true);
+            setAIFeedbackValue(data.data.AI_Answer)
+        })
+        .catch(error => console.log(error));
         // alert()
-        
+        // let data = JSON.stringify({
+        //     "name": "Add your name in the body"
+        //   });
+        // let config = {
+        //     method: 'put',
+        //     maxBodyLength: Infinity,
+        //     // url: 'https://ai-api-alpha.vercel.app/api/aicodeevaluation',
+        //     url: 'http://localhost:3001//api/aicodeevaluation',
+        //     headers: { 
+        //       'Content-Type': 'application/json',
+        //       "Access-Control-Allow-Origin": "*",
+        //       "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        //       "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+        //     },
+        //     data : data
+        //   };
+          
+        //   axios.request(config)
+        //   .then((response) => {
+        //     console.log(JSON.stringify(response.data));
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
 
     }
 
@@ -337,6 +379,7 @@ print(int(x)+int(y))
                 <span>{stdout}</span>
                 <span style={{color: "var(--text-code-error)"}}>{stderr}</span>
                 {stdout && showAIButton()}
+                {aiFeedback && <span >{aiFeedbackValue}</span>}
 
             </pre>
         );
