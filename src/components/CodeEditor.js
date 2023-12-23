@@ -138,7 +138,7 @@ export default function CodeEditor(props) {
             code: code,
         };
         axios
-        .put("https://ai-api-alpha.vercel.app/api/aifeedback", data)
+        .post("https://ai-api-alpha.vercel.app/api/aifeedback", data)
         .then(data => console.log(data.data))
         .catch(error => console.log(error));
         // alert()
