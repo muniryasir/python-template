@@ -138,11 +138,11 @@ export default function CodeEditor(props) {
         const data = {
             code,
         };
-        // let headerconfig =  {
-        //     headers: {
-        //     'Content-Type': 'application/json'
-        //     }
-        //   };
+        let headerconfig =  {
+            headers: {
+            'Content-Type': 'application/json'
+            }
+          };
         axios
         .put("https://ai-api-alpha.vercel.app/api/aifeedback", data, headerconfig)
         .then(data => console.log(data.data))
