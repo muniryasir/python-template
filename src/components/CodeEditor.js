@@ -134,9 +134,9 @@ export default function CodeEditor(props) {
     }
     
     function handleAIFeedback() {
-        let code = {code: input}
+        let code = {code: JSON.stringify(input)}
         
-        console.log('sent')
+        console.log(input)
         // const data = {
         //     code,
         // };
@@ -163,6 +163,7 @@ export default function CodeEditor(props) {
         // .catch(error => console.log(error));
         let urlstring = `https://ai-api-alpha.vercel.app/api/aicodeevaluation?question=${JSON.stringify(code)}`
         // let urlstring = `http://localhost:3001/api/aicodeevaluation?question=${JSON.stringify(code)}`
+        console.log(urlstring)
         axios.get(urlstring)
         .then((data) => { 
             console.log(data.data)
@@ -199,32 +200,26 @@ export default function CodeEditor(props) {
     }
 
     function handleItemClick (e)  {
+        setAIFeedbackValue('')
+        setAIFeedback(false)
+        setShowOutput(false)
         let value = e.target.id
         if(value == "1") {
           let primenumbers = 
   `
-# Program to check if a number is prime or not
 
 num = 29
 
-# To take input from the user
-#num = int(input("Enter a number: "))
-
-# define a flag variable
 flag = False
 
 if num == 1:
     print(num, "is not a prime number")
 elif num > 1:
-# check for factors
     for i in range(2, num):
         if (num % i) == 0:
-            # if factor is found, set flag to True
             flag = True
-            # break out of loop
             break
 
-# check if flag is True
 if flag:
     print(num, "is not a prime number")
 else:
@@ -236,17 +231,11 @@ else:
         } else if(value == '2') {
           let factoralNumber = 
           `
-# Python program to find the factorial of a number provided by the user.
-
-# change the value for a different result
 num = 7
 
-# To take input from the user
-#num = int(input("Enter a number: "))
 
 factorial = 1
 
-# check if the number is negative, positive or zero
 if num < 0:
     print("Sorry, factorial does not exist for negative numbers")
 elif num == 0:
@@ -261,26 +250,20 @@ else:
         } else if(value == '3') {
           let matrixMultiplication = 
           `
-# Program to multiply two matrices using nested loops
 
-# 3x3 matrix
 X = [[12,7,3],
     [4 ,5,6],
     [7 ,8,9]]
-# 3x4 matrix
 Y = [[5,8,1,2],
     [6,7,3,0],
     [4,5,9,1]]
-# result is 3x4
 result = [[0,0,0,0],
         [0,0,0,0],
         [0,0,0,0]]
 
-# iterate through rows of X
 for i in range(len(X)):
-    # iterate through columns of Y
     for j in range(len(Y[0])):
-        # iterate through rows of Y
+
         for k in range(len(Y)):
             result[i][j] += X[i][k] * Y[k][j]
 
@@ -293,7 +276,6 @@ for r in result:
         } else if(value=='4') {
 
             let simpleInput = `
-# Simple Input
 print('Enter input:')
 x  = input()
 print(x)
@@ -303,7 +285,6 @@ print(x)
         } else if(value=='5') {
 
             let simpleAddition = `
-# Simple Addition between two input numbers 
 print('Enter first Number:')
 x  = input()
 print('Enter Second Number:')
