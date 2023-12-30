@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import CodeEditor from "@site/src/components/CodeEditor";
 import CodeEditorOCR from "@site/src/components/CodeEditorOCR";
+import CodeEditorPseudo from "@site/src/components/CodeEditorPseudo";
 // import CodeEditor from "@site/src/components/CodeEditor";
 
 
@@ -53,19 +54,27 @@ else
 print("no")
 endif
 `
+const codePseudo = `
+
+Take two arguments from user
+Take the sum of two arguments
+Return the sum
+
+`
     const [modeIDE, setModeIDE] = React.useState(10);
     const [code, setCode] = React.useState(codePython);
 
     const handleChange = (event) => {
-      setModeIDE(event.target.value);
-      console.log(event.target.value)
-      if (event.target.value == 10) {
-        setCode(codePython)
+        setModeIDE(event.target.value);
+        console.log(event.target.value)
+        if (event.target.value == 10) {
+            setCode(codePython)
      
-    } else if (event.target.value == 20) {
-        setCode(codeOCR)
-     
-    }
+        } else if (event.target.value == 20) {
+            setCode(codeOCR)
+        } else if (event.target.value == 30) {
+            setCode(codePseudo)
+        }
     };
     // const EditorType = () => {
     //     console.log(modeIDE)
@@ -109,6 +118,7 @@ endif
                     <div className={styles.codeEditorWrapper}>
                         {modeIDE == 10 && <CodeEditor code={code} showButtons/>}
                         {modeIDE == 20 && <CodeEditorOCR code={code} showButtons/>}
+                        {modeIDE == 30 && <CodeEditorPseudo code={code} showButtons/>}
                     </div>
                 </div>
             </main>
