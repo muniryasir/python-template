@@ -256,7 +256,7 @@ export default function CodeEditorOCR(props) {
 
     function sendCode() {
 
-        let urlstring = `https://ai-api-alpha.vercel.app/api/pseudo_code_interperation?question=${JSON.stringify(code)}`
+        let urlstring = `https://ai-api-alpha.vercel.app/api/pseudo_code_interperation?question=${JSON.stringify(input)}`
         // let urlstring = `http://localhost:3000/api/pseudo_code_interperation?question=${JSON.stringify(input)}`
         console.log(urlstring)
         axios.get(urlstring)
@@ -267,7 +267,7 @@ export default function CodeEditorOCR(props) {
             setShowOutput(true);
             if(data.data.AI_Answer =="invalid") {
                setShowInvalidError(true);
-               setInvalidError('Invalid Code, please enter valid OCR code')     
+               setInvalidError('Invalid Code, please enter valid Pseudo code')     
             } else {
                 setShowInvalidError(false);
                 runPython(data.data.AI_Answer); 

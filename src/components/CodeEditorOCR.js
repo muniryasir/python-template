@@ -377,7 +377,7 @@ print(result)
 
     function sendCode() {
 
-        let urlstring = `https://ai-api-alpha.vercel.app/api/ocr_code_interperation?question=${JSON.stringify(code)}`
+        let urlstring = `https://ai-api-alpha.vercel.app/api/ocr_code_interperation?question=${JSON.stringify(input)}`
         // let urlstring = `http://localhost:3000/api/ocr_code_interperation?question=${JSON.stringify(input)}`
         console.log(urlstring)
         axios.get(urlstring)
