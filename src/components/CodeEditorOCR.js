@@ -410,7 +410,12 @@ print(result)
                 runPython(data.data.AI_Answer); 
             }
         })
-        .catch(error => console.log(error));
+        .catch((error) => { 
+            setShowLoader(false)
+            setShowOutput(true);
+            setShowInvalidError(true);
+               setInvalidError('Error interperating please try again')   
+        });
 
     }
 
