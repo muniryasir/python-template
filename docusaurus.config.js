@@ -8,6 +8,18 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+function Registeration() {
+   
+   
+    let reg = {
+        to: '/login',
+        label: 'Login',
+        position: 'right'
+
+    }
+    return reg
+}
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Python Docusaurus Template',  // set this
@@ -65,19 +77,32 @@ const config = {
                     alt: 'My Site Logo',
                     src: 'img/logo.svg',
                 },
-                // items: [
-                //     {
-                //         type: 'doc',
-                //         docId: 'intro',  // set this to your main docs page name
-                //         position: 'left',
-                //         label: 'Get Started',
-                //     },
-                //     {
-                //         href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
-                //         label: 'GitHub',
-                //         position: 'right',
-                //     },
-                // ],
+                items: [
+                    // {
+                    //     type: 'doc',
+                    //     docId: 'intro',  // set this to your main docs page name
+                    //     position: 'left',
+                    //     label: 'Get Started',
+                    // },
+                    // {
+                    //     href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
+                    //     label: 'GitHub',
+                    //     position: 'right',
+                    // },
+                    {
+                        to: '/',
+                        label: 'Python'
+                    },
+                    {
+                        to: '/ocr',
+                        label: 'OCR'
+                    },
+                    {
+                        to: '/pseudo',
+                        label: 'Pseudo'
+                    },
+                    Registeration()
+                ],
             },
             // set this – to the links you want
             // See: https://docusaurus.io/docs/api/themes/configuration#footer-1

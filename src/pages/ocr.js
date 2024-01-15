@@ -17,24 +17,29 @@ import FormControl from '@mui/material/FormControl';
 
 
 
-export default function Home() {
-    const codePython = `def foo():
-    print("How much foo")
-    print("would a foo bar bar")
-    print("if a foo bar could bar foo?")
-    
-    
-def bar():
-    print("A foo bar would bar")
-    print("as much foo as a foo bar could bar")
-    print("if a foo bar could bar foo.")
-    
+export default function HomeOCR() {
 
-foo()
-print()
-bar()
-`;
+const codeOCR = `
+function validate_user()
+const pw = "pass"
+pwguess = ""
+attempts = 1
+do
+    print("Attempt number " + attempts)
+    pwguess = input("Password: ")
+    attempts += 1
+until pwguess == pw OR attempts > 3
 
+return pwguess == pw
+endfunction
+
+if validate_user() then
+print("yay")
+else
+print("no")
+endif
+`
+    const [modeIDE, setModeIDE] = React.useState(10);
 
 
     // const EditorType = () => {
@@ -58,12 +63,12 @@ bar()
             <main>
                 <div className={styles.heroContainer}>
                     {/* <h1>Python IDE</h1> */}
-  
+                   
                     {/* <p className={styles.tagline}>A no-nonsense markdown-only template with runnable and editable Python code blocks</p> */}
                     {/* <Link className={"button button--primary"} href={"docs/intro"}>Get Started</Link> */}
                     <div className={styles.codeEditorWrapper}>
-                        <CodeEditor code={codePython} showButtons/>
-                        
+
+                        <CodeEditorOCR code={codeOCR} showButtons/>
                     </div>
                 </div>
             </main>

@@ -15,6 +15,14 @@ import "./CodeEditor.css"
 
 import axios from "axios";
 
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import Loader from "react-js-loader";
+
+
+let marks = [0,0]
+let testQuesCount = 0;
+let color = 'blue'
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -93,7 +101,12 @@ export default function CodeEditorOCR(props) {
     const [aiFeedbackValue, setAIFeedbackValue] = useState('')
     const [showInvalidError, setShowInvalidError] = useState(false)
     const [InvalidError, setInvalidError] = useState('')
-
+    const [questionValue, setQuestionValue] = useState('')
+    const [testQuestions, setTestQuestions] = useState('')
+    const [testStarted, setTestStarted] = useState(false);
+    const [testStatus, setTestStatus] = useState('Begin Test')
+    const [showResults, setShowResults] = useState(false)
+    const [showLoader, setShowLoader] = useState(false)
 
     useEffect(() => {
         setInput(props.code.trimEnd());
@@ -166,9 +179,11 @@ export default function CodeEditorOCR(props) {
         let urlstring = `https://ai-api-alpha.vercel.app/api/ai_code_evaluation_ocr?question=${JSON.stringify(code)}`
         // let urlstring = `http://localhost:3000/api/ai_code_evaluation_ocr?question=${JSON.stringify(code)}`
         console.log(urlstring)
+        setShowLoader(true)
         axios.get(urlstring)
         .then((data) => { 
             console.log(data.data)
+            setShowLoader(false)
             setAIFeedback(true);
             setAIFeedbackValue(data.data.AI_Answer)
         })
@@ -380,11 +395,13 @@ print(result)
         let urlstring = `https://ai-api-alpha.vercel.app/api/ocr_code_interperation?question=${JSON.stringify(input)}`
         // let urlstring = `http://localhost:3000/api/ocr_code_interperation?question=${JSON.stringify(input)}`
         console.log(urlstring)
+        setShowLoader(true)
         axios.get(urlstring)
         .then((data) => { 
             console.log(data.data)
             // setAIFeedback(true);
             // setAIFeedbackValue(data.data.AI_Answer)
+            setShowLoader(false)
             setShowOutput(true);
             if(data.data.AI_Answer =="invalid") {
                setShowInvalidError(true);
@@ -449,14 +466,24 @@ print(result)
 
     function output() {
         return (
-            <pre className={"output-window"}>
-                <span>{stdout}</span>
-                {showInvalidError && <span> ${InvalidError} </span>}
-                <span style={{color: "var(--text-code-error)"}}>{stderr}</span>
-                {stdout && showAIButton()}
-                {aiFeedback && <span >{aiFeedbackValue}</span>}
-
-            </pre>
+            <Grid container >
+                <Grid xs={12}>               
+                    {!showResults && <pre className={"output-window"}>
+                        <span>{stdout}</span>
+                        <span style={{color: "var(--text-code-error)"}}>{stderr}</span>
+                        <span style={{color: "var(--text-code-error)"}}>{InvalidError}</span>
+                    </pre>}
+                    {showResults && <pre className={"output-window"}>
+                        <ResultCard />
+                    </pre>} 
+                </Grid>
+                <Grid xs={12}>
+                    <pre className={"output-window"}>
+                        {stdout && showAIButton()}
+                        <span >{aiFeedbackValue}</span>    
+                    </pre>
+                </Grid>
+            </Grid>
         );
     }
 
@@ -498,6 +525,128 @@ print(result)
         return props.showButtons || isMobile() || playFocus || resetFocus;
     }
 
+    function handleStartTest() {
+        setTestStarted(true)
+        setShowResults(false)
+        setTestStatus("End Test")
+        testQuesCount = 0
+        
+        if(testStatus=="Begin Test") {
+            setShowLoader(true)
+            // setInput('')
+
+            let urlstring = `https://ai-api-alpha.vercel.app/api/test_questions_request?q=1`
+            // let urlstring = `http://localhost:3000/api/test_questions_request?q=1`
+            console.log(urlstring)
+            axios.get(urlstring)
+            .then((data) => { 
+                // console.log(data.data)
+                setTestQuestions(data.data.message)
+                setupQuestion(data.data.message)
+                setShowLoader(false)
+                testQuesCount++
+                
+            })
+            .catch(error => console.log(error));
+        } else {
+            setTestStarted(false)
+            setTestStatus('Begin Test')
+            setQuestionValue('')
+            createResultCard()
+        }
+        
+    }
+
+    function setupQuestion(questionArray) {
+        console.log(testQuesCount)
+        
+        let description = questionArray[testQuesCount].Description;
+        setQuestionValue(description.replace('\t',''))
+        // testQuesCount++; 
+        
+    }
+
+    function handleNextQuesRequest(e) {
+        // console.log(e.target.)
+        if(testQuesCount<2) {
+           
+            testQuesCount++
+            if(testQuesCount>=2) {
+                testQuesCount = 1
+            } else if(testQuesCount<0) {
+                testQuesCount = 0
+            }
+            setupQuestion(testQuestions)
+            
+            
+            
+        } 
+
+    }
+    function handlePrevQuesRequest(e) {
+        // console.log(e.target.)
+        
+        if(testQuesCount>=0 ) {
+            if(testQuesCount>=2) {
+                testQuesCount = 0
+            } else if(testQuesCount<0) {
+                testQuesCount = 0
+            }  
+            setupQuestion(testQuestions)
+            testQuesCount--
+            
+        } 
+
+    }
+
+    function question() {
+        return (
+            <pre className={"question-window"}>
+                <span>{questionValue}</span>
+                
+
+            </pre>
+        );
+    }
+
+    function CodeBox() {
+        return (
+            <Grid container spacing={1}>
+      <Grid xs={3.5}>
+        {showOutput && question()}
+        </Grid>
+        <Grid xs={5}>
+        {!testStarted && <Stack direction="row" spacing={2}>
+                  <Item id="1" onClick={handleItemClick}>Example 1</Item>
+                  <Item id="2" onClick={handleItemClick}>Example 2 </Item>
+                  <Item id="3" onClick={handleItemClick}>Example 3</Item>
+                  <Item id="4" onClick={handleItemClick}>Example 4</Item>
+                  <Item id="5" onClick={handleItemClick}>Example 5</Item>
+                </Stack> }
+        <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
+                    {editor()}
+                    <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
+                        {isLoading ? <span>Loading...</span> : buttons()}
+                    </div>
+                </div>
+        </Grid>
+        <Grid xs={3.5}>
+        {showOutput && output()}
+        </Grid>
+        {isAwaitingInput && showPrompt()}
+      </Grid>
+        )
+    }
+
+    function DisplayLoader() {
+
+        return (
+<div className='loaderC'>
+                <Loader type="box-rotate-x" bgColor={color} color={color} title={"Loading"} size={100} />
+                </div>
+        )
+
+    }
     const fallback = <pre style={{margin: 0, padding: "0.55rem"}}>{input}</pre>;
 
     return <BrowserOnly fallback={fallback}>
@@ -506,28 +655,24 @@ print(result)
                 setplayFocus(false);
                 setresetFocus(false);
             }}>
+                  {showLoader &&  <DisplayLoader />}
+                { isLoading &&  <DisplayLoader />}
                 <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid xs={6}>
-        <Stack direction="row" spacing={2}>
-                  <Item id="1" onClick={handleItemClick}>Example 1</Item>
-                  <Item id="2" onClick={handleItemClick}>Example 2 </Item>
-                  <Item id="3" onClick={handleItemClick}>Example 3</Item>
-                  <Item id="4" onClick={handleItemClick}>Example 4</Item>
-                  <Item id="5" onClick={handleItemClick}>Example 5</Item>
-                </Stack>
-        <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
-                    {editor()}
-                    <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
-                        {isLoading ? <span>Loading...</span> : buttons()}
-                    </div>
-                </div>
-        </Grid>
-        <Grid xs={6}>
-        {showOutput && output()}
-        </Grid>
-        {isAwaitingInput && showPrompt()}
-      </Grid>
+                <Grid container spacing={1}> 
+                    <Grid xs={12}>
+                    {/* <button type="button" onClick={handleStartTest}>Begin Test</button> */}
+                        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                        {testStarted && <Button onClick={handlePrevQuesRequest}>Previous</Button>}
+                        <Button  onClick={handleStartTest}>{testStatus}</Button>
+                        {testStarted && <Button>Template</Button>}
+                        {testStarted && <Button>Outline</Button>}
+                        {testStarted && <Button onClick={handleNextQuesRequest}>Next</Button>}
+                        </ButtonGroup>
+                    </Grid>
+                    <Grid xs={12}>
+                    <CodeBox />
+                    </Grid>
+                </Grid>
     </Box>
              
    

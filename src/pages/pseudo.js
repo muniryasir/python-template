@@ -17,26 +17,17 @@ import FormControl from '@mui/material/FormControl';
 
 
 
-export default function Home() {
-    const codePython = `def foo():
-    print("How much foo")
-    print("would a foo bar bar")
-    print("if a foo bar could bar foo?")
-    
-    
-def bar():
-    print("A foo bar would bar")
-    print("as much foo as a foo bar could bar")
-    print("if a foo bar could bar foo.")
-    
+export default function HomePseudo() {
+   
+const codePseudo = `
 
-foo()
-print()
-bar()
-`;
+Take two arguments from user
+Take the sum of two arguments
+Return the sum
 
+`
 
-
+  
     // const EditorType = () => {
     //     console.log(modeIDE)
     //     if (modeIDE == 10) {
@@ -58,12 +49,12 @@ bar()
             <main>
                 <div className={styles.heroContainer}>
                     {/* <h1>Python IDE</h1> */}
-  
+                  
                     {/* <p className={styles.tagline}>A no-nonsense markdown-only template with runnable and editable Python code blocks</p> */}
                     {/* <Link className={"button button--primary"} href={"docs/intro"}>Get Started</Link> */}
                     <div className={styles.codeEditorWrapper}>
-                        <CodeEditor code={codePython} showButtons/>
                         
+                        <CodeEditorPseudo code={codePseudo} showButtons/>
                     </div>
                 </div>
             </main>
