@@ -6,7 +6,9 @@ var UserProfile = (function() {
     var getEmail = function() {
       if(checkTimeout())
         {
-          email = localStorage.getItem("email")
+          if (typeof window !== 'undefined') {
+          email = localStorage.getItem("email") 
+        }
           return  email;
       } else {
         return false
@@ -14,8 +16,9 @@ var UserProfile = (function() {
     };
   
     var setEmail = function(email) {
-
+      if (typeof window !== 'undefined') {
       localStorage.setItem("email",email)
+      }
       setTimeout()      
       // Also set this in cookie/localStorage
     };
@@ -23,15 +26,20 @@ var UserProfile = (function() {
     var setTimeout = function() {
 
       const timestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
+      if (typeof window !== 'undefined') {
       localStorage.setItem("timeout", timestamp);
-
+      }
       
     }
 
     var checkTimeout = function() {
       
       let timestamp = moment();
-      let savedtimestamp = moment(localStorage.getItem("timeout"), 'MMMM Do YYYY, h:mm:ss a');
+      let savedtimestamp =  moment();
+      if (typeof window !== 'undefined') {
+        savedtimestamp = moment(localStorage.getItem("timeout"), 'MMMM Do YYYY, h:mm:ss a');
+      }
+      
       // console.log('stored value '+ localStorage.getItem("timeout"))
       // console.log("timestamp " +timestamp.format('MMMM Do YYYY, h:mm:ss a'))
       // console.log("savedtimestamp " +savedtimestamp.format('MMMM Do YYYY, h:mm:ss a'))
