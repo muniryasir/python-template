@@ -6,7 +6,7 @@ var UserProfile = (function() {
     var getEmail = function() {
       if(checkTimeout())
         {
-          email = window.localStorage.getItem("email")
+          email = localStorage.getItem("email")
           return  email;
       } else {
         return false
@@ -15,7 +15,7 @@ var UserProfile = (function() {
   
     var setEmail = function(email) {
 
-      window.localStorage.setItem("email",email)
+      localStorage.setItem("email",email)
       setTimeout()      
       // Also set this in cookie/localStorage
     };
@@ -23,7 +23,7 @@ var UserProfile = (function() {
     var setTimeout = function() {
 
       const timestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
-      window.clearlocalStorage.setItem("timeout", timestamp);
+      localStorage.setItem("timeout", timestamp);
 
       
     }
