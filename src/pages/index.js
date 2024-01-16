@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import CodeEditor from "@site/src/components/CodeEditor";
@@ -18,6 +18,25 @@ import FormControl from '@mui/material/FormControl';
 
 
 export default function Home() {
+    // useEffect(() => {
+    //     const allWithClass = Array.from(
+    //         document.getElementsByClassName('navbar__items navbar__items--right')
+        
+    //     );
+    //     for (let x = 0; x< allWithClass[0].children.length; x++) {
+    //         // Do stuff
+            
+    //         let element = allWithClass[0].children[x];
+            
+    //         if(element.innerHTML == 'Login') {
+    //             element.innerHTML = 'userName'
+    //             element.href = '#'
+    //         } else {
+    //             console.log(element.innerHTML)
+    //         }
+    //     }
+       
+    //   }, []);
     const codePython = `def foo():
     print("How much foo")
     print("would a foo bar bar")

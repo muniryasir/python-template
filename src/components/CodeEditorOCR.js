@@ -216,10 +216,30 @@ export default function CodeEditorOCR(props) {
 
     }
 
+    function createResultCard() {
+        setShowResults(true)
+
+    }
+
+    function ResultCard() {
+        // let card = document.createElement('span');
+        // card.innerText = '10 / '+marks[1]
+        // for(x=0; x<marks.len-1; x++) {
+            
+
+        // }
+        return (
+            <pre className={"output-window"}> 
+                <p>Q1 {marks[0]}</p>
+                <p>Q2 {marks[1]}</p>
+            </pre>
+        )
+    }
+
     function handleItemClick (e)  {
         setAIFeedbackValue('')
-        setAIFeedback(false)
-        setShowOutput(false)
+        // setAIFeedback(false)
+        // setShowOutput(false)
         let value = e.target.id
         if(value == "1") {
           let userValidation = 
@@ -391,7 +411,7 @@ print(result)
     }
 
     function sendCode() {
-
+        setShowResults(false)
         let urlstring = `https://ai-api-alpha.vercel.app/api/ocr_code_interperation?question=${JSON.stringify(input)}`
         // let urlstring = `http://localhost:3000/api/ocr_code_interperation?question=${JSON.stringify(input)}`
         console.log(urlstring)
@@ -418,6 +438,7 @@ print(result)
         });
 
     }
+
 
     function run() {
         setShowOutput(true);
@@ -471,8 +492,8 @@ print(result)
 
     function output() {
         return (
-            <Grid container >
-                <Grid xs={12}>               
+            <div>
+                       
                     {!showResults && <pre className={"output-window"}>
                         <span>{stdout}</span>
                         <span style={{color: "var(--text-code-error)"}}>{stderr}</span>
@@ -481,16 +502,16 @@ print(result)
                     {showResults && <pre className={"output-window"}>
                         <ResultCard />
                     </pre>} 
-                </Grid>
-                <Grid xs={12}>
+                
                     <pre className={"output-window"}>
                         {stdout && showAIButton()}
                         <span >{aiFeedbackValue}</span>    
                     </pre>
-                </Grid>
-            </Grid>
+           
+            </div>
         );
     }
+
 
     function showPrompt() {
         return (
@@ -533,6 +554,8 @@ print(result)
     function handleStartTest() {
         setTestStarted(true)
         setShowResults(false)
+        setShowOutput(true);
+
         setTestStatus("End Test")
         testQuesCount = 0
         
@@ -675,10 +698,35 @@ print(result)
                         </ButtonGroup>
                     </Grid>
                     <Grid xs={12}>
-                    <CodeBox />
+                        <Grid container spacing={1}>
+                            <Grid xs={3}>
+                                {showOutput && question()}
+                                </Grid>
+                                <Grid xs={5} style={{width: "50%"}}>
+                                {!testStarted && <Stack direction="row" spacing={2}>
+                                        <Item id="1" onClick={handleItemClick}>Example 1</Item>
+                                        <Item id="2" onClick={handleItemClick}>Example 2 </Item>
+                                        <Item id="3" onClick={handleItemClick}>Example 3</Item>
+                                        <Item id="4" onClick={handleItemClick}>Example 4</Item>
+                                        <Item id="5" onClick={handleItemClick}>Example 5</Item>
+                                        </Stack> }
+                                <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
+                                            {editor()}
+                                            <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
+                                                {isLoading ? <span>Loading...</span> : buttons()}
+                                            </div>
+                                        </div>
+                                </Grid>
+                                <Grid xs={3}>
+                                {showOutput && output()}
+                                </Grid>
+                                {isAwaitingInput && showPrompt()}
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
-    </Box>
+
+                    
+                </Box>
              
    
             </div>

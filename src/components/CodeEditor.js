@@ -324,6 +324,8 @@ print(int(x)+int(y))
     function handleStartTest() {
         setTestStarted(true)
         setShowResults(false)
+        setShowOutput(true);
+
         setTestStatus("End Test")
         testQuesCount = 0
         
@@ -398,7 +400,8 @@ print(int(x)+int(y))
     }
 
     function run() {
-        
+        setShowResults(false)
+
         setShowOutput(true);
         // setShowLoader(true)
         console.log(input)
@@ -470,8 +473,9 @@ print(int(x)+int(y))
 
     function output() {
         return (
-            <Grid container >
-                <Grid xs={12}>               
+            // <Grid container >
+            //     <Grid xs={12}> 
+            <div>              
                     {!showResults && <pre className={"output-window"}>
                         <span>{stdout}</span>
                         <span style={{color: "var(--text-code-error)"}}>{stderr}</span>
@@ -479,15 +483,16 @@ print(int(x)+int(y))
                     {showResults && <pre className={"output-window"}>
                         <ResultCard />
                     </pre>} 
-                </Grid>
-                <Grid xs={12}>
+                 {/* </Grid>  
+                 <Grid xs={12}> */}
                     <pre className={"output-window"}>
                         {stdout && showAIButton()}
                         <span >{aiFeedbackValue}</span>    
                     </pre>
-                </Grid>
-            </Grid>
-        );
+                {/* </Grid>
+             </Grid> */}
+            </div>
+            );
     }
 
     function question() {
@@ -548,10 +553,10 @@ print(int(x)+int(y))
     function CodeBox() {
         return (
             <Grid container spacing={1}>
-      <Grid xs={3.5}>
+      <Grid xs={3}>
         {showOutput && question()}
         </Grid>
-        <Grid xs={5}>
+        <Grid xs={5} style={{width: "50%"}}>
         {!testStarted && <Stack direction="row" spacing={2}>
                   <Item id="1" onClick={handleItemClick}>Example 1</Item>
                   <Item id="2" onClick={handleItemClick}>Example 2 </Item>
@@ -561,16 +566,16 @@ print(int(x)+int(y))
                 </Stack> }
         <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
                     {editor()}
-                    <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
-                        {isLoading ? <span>Loading...</span> : buttons()}
-                    </div>
-                </div>
-        </Grid>
-        <Grid xs={3.5}>
-        {showOutput && output()}
-        </Grid>
-        {isAwaitingInput && showPrompt()}
-      </Grid>
+                     <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
+                         {isLoading ? <span>Loading...</span> : buttons()}
+                     </div>
+                 </div>
+         </Grid>
+         <Grid xs={3}>
+         {showOutput && output()}
+         </Grid>
+         {isAwaitingInput && showPrompt()}
+    </Grid>
         )
     }
 
@@ -607,9 +612,32 @@ print(int(x)+int(y))
                         </ButtonGroup>
                     </Grid>
                     <Grid xs={12}>
-                    <CodeBox />
+                        <Grid container spacing={1}>
+                            <Grid xs={3}>
+                                {showOutput && question()}
+                                </Grid>
+                                <Grid xs={4}>
+                                {!testStarted && <Stack direction="row" spacing={2}>
+                                        <Item id="1" onClick={handleItemClick}>Example 1</Item>
+                                        <Item id="2" onClick={handleItemClick}>Example 2 </Item>
+                                        <Item id="3" onClick={handleItemClick}>Example 3</Item>
+                                        <Item id="4" onClick={handleItemClick}>Example 4</Item>
+                                        <Item id="5" onClick={handleItemClick}>Example 5</Item>
+                                        </Stack> }
+                                <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
+                                            {editor()}
+                                            <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
+                                                {isLoading ? <span>Loading...</span> : buttons()}
+                                            </div>
+                                        </div>
+                                </Grid>
+                                <Grid xs={3}>
+                                {showOutput && output()}
+                                </Grid>
+                                {isAwaitingInput && showPrompt()}
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
 
                     
                 </Box>
