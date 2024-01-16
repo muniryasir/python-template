@@ -554,7 +554,7 @@ print(result)
     function handleStartTest() {
         setTestStarted(true)
         setShowResults(false)
-        setShowOutput(true);
+        // setShowOutput(true);
 
         setTestStatus("End Test")
         testQuesCount = 0

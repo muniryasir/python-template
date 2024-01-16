@@ -430,7 +430,7 @@ export default function CodeEditorOCR(props) {
     function handleStartTest() {
         setTestStarted(true)
         setShowResults(false)
-        setShowOutput(false);
+        // setShowOutput(false);
 
         setTestStatus("End Test")
         testQuesCount = 0
