@@ -557,13 +557,13 @@ print(int(x)+int(y))
         {showOutput && question()}
         </Grid>
         <Grid xs={5} style={{width: "50%"}}>
-        {!testStarted && <Stack direction="row" spacing={2}>
+        {/* {!testStarted && <Stack direction="row" spacing={2}>
                   <Item id="1" onClick={handleItemClick}>Example 1</Item>
                   <Item id="2" onClick={handleItemClick}>Example 2 </Item>
                   <Item id="3" onClick={handleItemClick}>Example 3</Item>
                   <Item id="4" onClick={handleItemClick}>Example 4</Item>
                   <Item id="5" onClick={handleItemClick}>Example 5</Item>
-                </Stack> }
+                </Stack> } */}
         <div className={"code-editor-window"} style={showOutput ? {borderRadius: ".25em .25em 0 0"} : {}}>
                     {editor()}
                      <div className={"button-container"} style={showButtons() ? {opacity: 100} : {}}>
