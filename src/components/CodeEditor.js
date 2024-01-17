@@ -16,13 +16,13 @@ import OutputBox from './outputBox';
 import axios from "axios";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import Loader from "react-js-loader";
-import LoadingOverlay from 'react-loading-overlay-ts';
 
+import LoadingOverlay from 'react-loading-overlay-ts';
+import DisplayLoader from './DisplayLoader';
 
 let marks = [0,0]
 let testQuesCount = 0;
-let color = 'blue'
+
 
 
 
@@ -579,15 +579,7 @@ print(int(x)+int(y))
         )
     }
 
-    function DisplayLoader() {
 
-        return (
-<div className='loaderC'>
-                <Loader type="box-rotate-x" bgColor={color} color={color} title={"Loading"} size={100} />
-                </div>
-        )
-
-    }
 
     const fallback = <pre style={{margin: 0, padding: "0.55rem"}}>{input}</pre>;
     
@@ -616,7 +608,7 @@ print(int(x)+int(y))
                             <Grid xs={3}>
                                 {showOutput && question()}
                                 </Grid>
-                                <Grid xs={4}>
+                                <Grid xs={5} style={{width:"50%"}}>
                                 {!testStarted && <Stack direction="row" spacing={2}>
                                         <Item id="1" onClick={handleItemClick}>Example 1</Item>
                                         <Item id="2" onClick={handleItemClick}>Example 2 </Item>

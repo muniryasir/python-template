@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import CodeEditor from "@site/src/components/CodeEditor";
@@ -13,12 +13,36 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
+import UserProfile from "../components/UserProfile";
 
 
 
 
 export default function HomePseudo() {
-   
+  
+    useEffect(() => {
+        if(UserProfile.getEmail()!=false) {
+            const allWithClass = Array.from(
+                document.getElementsByClassName('navbar__items navbar__items--right')
+            
+            );
+            for (let x = 0; x< allWithClass[0].children.length; x++) {
+                // Do stuff
+                
+                let element = allWithClass[0].children[x];
+                
+                if(element.innerHTML == 'Login') {
+                    element.innerHTML = UserProfile.getEmail()
+                    element.href = '#'
+                } else {
+                    console.log(element.innerHTML)
+                }
+            }
+        } else {
+    
+        }
+      }, []);
+
 const codePseudo = `
 
 Take two arguments from user

@@ -13,30 +13,35 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
+import UserProfile from "../components/UserProfile";
 
 
 
 
 export default function Home() {
-    // useEffect(() => {
-    //     const allWithClass = Array.from(
-    //         document.getElementsByClassName('navbar__items navbar__items--right')
-        
-    //     );
-    //     for (let x = 0; x< allWithClass[0].children.length; x++) {
-    //         // Do stuff
+    useEffect(() => {
+        if(UserProfile.getEmail()!=false) {
+            console.log(UserProfile.getEmail())
+            const allWithClass = Array.from(
+                document.getElementsByClassName('navbar__items navbar__items--right')
             
-    //         let element = allWithClass[0].children[x];
-            
-    //         if(element.innerHTML == 'Login') {
-    //             element.innerHTML = 'userName'
-    //             element.href = '#'
-    //         } else {
-    //             console.log(element.innerHTML)
-    //         }
-    //     }
-       
-    //   }, []);
+            );
+            for (let x = 0; x< allWithClass[0].children.length; x++) {
+                // Do stuff
+                
+                let element = allWithClass[0].children[x];
+                
+                if(element.innerHTML == 'Login') {
+                    element.innerHTML = UserProfile.getEmail()
+                    element.href = '#'
+                } else {
+                    console.log(element.innerHTML)
+                }
+            }
+        } else {
+    
+        }
+      }, []);
     const codePython = `def foo():
     print("How much foo")
     print("would a foo bar bar")

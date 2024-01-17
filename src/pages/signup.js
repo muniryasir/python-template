@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from 'react';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -47,23 +47,48 @@ const theme = createMuiTheme({
 
 
 export default function SignUp() {
+  // console.log(UserProfile.getEmail())
+  useEffect(() => {
+    if(UserProfile.getEmail()!=false) {
+        const allWithClass = Array.from(
+            document.getElementsByClassName('navbar__items navbar__items--right')
+        
+        );
+        for (let x = 0; x< allWithClass[0].children.length; x++) {
+            // Do stuff
+            
+            let element = allWithClass[0].children[x];
+            
+            if(element.innerHTML == 'Login') {
+                element.innerHTML = UserProfile.getEmail()
+                element.href = '#'
+            } else {
+                console.log(element.innerHTML)
+            }
+        }
+    } else {
 
-  UserProfile.setTimeout()
+    }
+  }, []);
 
 
-  const [formError, setFormError] = React.useState('Signup')   
+  const [formError, setFormError] = React.useState('Signup')  
+  const [showLoader, setShowLoader] = useState(false)
+ 
 
   function sendSignupRequest(signupData) {
 
-    // let urlstring = `https://ai-api-alpha.vercel.app/api/ocr_code_interperation?question=${JSON.stringify(loginData)}`
-    let urlstring = `http://localhost:3000/api/signup_request?signup_data=${JSON.stringify(signupData)}`
+    let urlstring = `https://ai-api-alpha.vercel.app/api/signup_request?signup_data=${JSON.stringify(signupData)}`
+    // let urlstring = `http://localhost:3000/api/signup_request?signup_data=${JSON.stringify(signupData)}`
     console.log(urlstring)
+    setShowLoader(true)
     axios.get(urlstring)
     .then((data) => {
       let signup_response = data.data.message; 
         setFormError(signup_response)
-        
+        setShowLoader(false)
         if(signup_response=='User Registered') {
+          UserProfile.setEmail(signupData.email)
           console.log(signup_response)
           window.location = '/login'
         }
@@ -100,9 +125,9 @@ export default function SignUp() {
 
     return (
   
-      <ThemeProvider theme={theme}
-      
-      >
+      <ThemeProvider theme={theme}>
+                {showLoader &&  <DisplayLoader />}
+
       <Container component="main" maxWidth="xs"
       // sx={{bgcolor: "rgba(0, 0, 0, 0.87)"}}
       >
@@ -190,7 +215,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

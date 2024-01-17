@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from 'react';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider,createMuiTheme } from "@mui/material/styles"
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 import axios from "axios";
-
+import DisplayLoader from '../components/DisplayLoader';
 
 import UserProfile from "../components/UserProfile";
 function Copyright(props) {
@@ -50,19 +50,43 @@ const theme = createMuiTheme({
 
 export default function Login() {
 
+  useEffect(() => {
+    if(UserProfile.getEmail()!=false) {
+        const allWithClass = Array.from(
+            document.getElementsByClassName('navbar__items navbar__items--right')
+        
+        );
+        for (let x = 0; x< allWithClass[0].children.length; x++) {
+            // Do stuff
+            
+            let element = allWithClass[0].children[x];
+            
+            if(element.innerHTML == 'Login') {
+                element.innerHTML = UserProfile.getEmail()
+                element.href = '#'
+            } else {
+                console.log(element.innerHTML)
+            }
+        }
+    } else {
+
+    }
+  }, []);
 
   const [formError, setFormError] = React.useState('Login') 
-  
+  const [showLoader, setShowLoader] = useState(false)
   // console.log('here')
 
   function sendLoginRequest(loginData) {
 
-    // let urlstring = `https://ai-api-alpha.vercel.app/api/ocr_code_interperation?question=${JSON.stringify(loginData)}`
-    let urlstring = `http://localhost:3000/api/login_request?login_data=${JSON.stringify(loginData)}`
+    let urlstring = `https://ai-api-alpha.vercel.app/api/login_request?login_data=${JSON.stringify(loginData)}`
+    // let urlstring = `http://localhost:3000/api/login_request?login_data=${JSON.stringify(loginData)}`
     console.log(urlstring)
+    setShowLoader(true)
     axios.get(urlstring)
     .then((data) => {
-      let login_response = data.data.message; 
+      let login_response = data.data.message;
+      setShowLoader(false) 
         setFormError(login_response)
         if(login_response == 'Access Granted') {
           UserProfile.setEmail(loginData.email)
@@ -100,13 +124,12 @@ export default function Login() {
   function LoginForm() {
 
     return (
-  
-      <ThemeProvider theme={theme}
       
-      >
+      <ThemeProvider theme={theme}      >
       <Container component="main" maxWidth="xs"
       // sx={{bgcolor: "rgba(0, 0, 0, 0.87)"}}
       >
+        {showLoader &&  <DisplayLoader />}
         <CssBaseline />
         <Box
           sx={{
