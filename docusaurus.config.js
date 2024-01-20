@@ -77,6 +77,7 @@ const config = {
                     alt: 'My Site Logo',
                     src: 'img/logo.svg',
                 },
+                /*
                 items: [
                     // {
                     //     type: 'doc',
@@ -102,7 +103,7 @@ const config = {
                         label: 'Pseudo'
                     },
                     Registeration()
-                ],
+                ], */
             },
             // set this – to the links you want
             // See: https://docusaurus.io/docs/api/themes/configuration#footer-1
