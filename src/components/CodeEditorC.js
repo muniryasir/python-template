@@ -188,7 +188,12 @@ export default function CodeEditorC(props) {
                 if(isValid == 'valid')
                     { 
                         setValidCode(true)
-                        run()
+                        if(mode=='Python'){
+                            run()
+                        } else {
+                            runPython(data.data.code)
+                        }
+                        
                         setEvaluationResult(data.data.Reasoning)
                         marks.push(data.data.marks)
                 } else {
@@ -199,6 +204,7 @@ export default function CodeEditorC(props) {
             })
             .catch(error => {
                 console.log(error)
+                setShowLoader(false)
                 setshowPError(true)
                 setShowOutput(true);
             });
@@ -225,7 +231,12 @@ export default function CodeEditorC(props) {
                  if(isValid == 'valid')
                      { 
                          setValidCode(true)
-                         run()
+                         if(mode=='Python'){
+                            run()
+                        } else {
+                            runPython(data.data.code)
+                        }
+                        
                          setEvaluationResult(data.data.reasoning)
                  } else {
                      setValidCode(false)
@@ -235,6 +246,8 @@ export default function CodeEditorC(props) {
              })
              .catch(error => {
                 console.log(error)
+                setShowLoader(false)
+
                 setshowPError(true)
                 setShowOutput(true);
             });
