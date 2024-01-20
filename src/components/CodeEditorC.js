@@ -174,8 +174,8 @@ export default function CodeEditorC(props) {
                 test: 'yes'
             }
             console.log(practiceQ[practiceTestCount])
-            // let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(handleSubmitCode)}`
-            let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+            let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+            // let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
             console.log(urlstring)
             setShowLoader(true)
             axios.get(urlstring)
@@ -210,8 +210,9 @@ export default function CodeEditorC(props) {
                 test: 'no'
             }
 
-             // let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(handleSubmitCode)}`
-             let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+             let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+
+             //  let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
              console.log(urlstring)
              setShowLoader(true)
              axios.get(urlstring)
@@ -499,8 +500,8 @@ print(int(x)+int(y))
         if(practiceStatus=='Practice')
             {
                 // setShowQuestion(true)
-                // let urlstring = `https://ai-api-alpha.vercel.app/api/test_questions_request?q=1`
-                let urlstring = `http://localhost:3000/api/get_practice_questions?q=1`
+                let urlstring = `https://ai-api-alpha.vercel.app/api/get_practice_questions?q=1`
+                // let urlstring = `http://localhost:3000/api/get_practice_questions?q=1`
                 console.log(urlstring)
                 setShowLoader(true)
                 axios.get(urlstring)
