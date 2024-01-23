@@ -112,6 +112,7 @@ export default function CodeEditorC(props) {
     const [testStarted, setTestStarted] = useState(false);
     const [testStatus, setTestStatus] = useState('Begin Test')
     const [practiceStatus, setPracticeStatus] = useState('Practice')
+    const [practiceActive, setPracticeActive] = useState(false)
     const [showQuestion, setShowQuestion] = useState(false)
 
 
@@ -158,100 +159,142 @@ export default function CodeEditorC(props) {
     function onChangeIS (event) {
         setpromptInput(event.target.value)
     }
-
+    function convertToJSON(str) {
+        let jsonresponse;
+          try {
+            jsonresponse = JSON.parse(str);
+            return jsonresponse
+        } catch (e) {
+          jsonresponse = str;
+        return jsonresponse
+      }
+    }
     const handleChangeMode = (event) => {
         setMode(event.target.value);
       };
 
-      const handleSubmitCode = (event) => {
-       setshowPError(false)
-        if(showQuestion == true) {
-            let requestPackage = {
-                mode: mode,
-                code: input,
-                marks: practiceQ[practiceTestCount].Marks,
-                topic: practiceQ[practiceTestCount].Topic,
-                test: 'yes'
-            }
-            console.log(practiceQ[practiceTestCount])
-            let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
-            // let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
-            console.log(urlstring)
-            setShowLoader(true)
-            axios.get(urlstring)
-            .then((data) => { 
-                console.log(data.data)
-                setShowOutput(true);
-                setShowLoader(false);
-                // setEvaluationResult(true)
-                let isValid = data.data.valid
-                if(isValid == 'valid')
-                    { 
-                        setValidCode(true)
-                        if(mode=='Python'){
-                            run()
-                        } else {
-                            runPython(data.data.code)
-                        }
-                        
-                        setEvaluationResult(data.data.Reasoning)
-                        marks.push(data.data.marks)
-                } else {
-                    setValidCode(false)
-                    setEvaluationResult(data.data.Reasoning)
+      function indexChecker(index,jsonObj) {
+        let indexValue = ''
+        if(index=='Reasoning') {
+            if(jsonObj.hasOwnProperty('Reasoning'))
+               { 
+                indexValue = jsonObj.Reasoning 
                 }
-                
-            })
-            .catch(error => {
-                console.log(error)
-                setShowLoader(false)
-                setshowPError(true)
-                setShowOutput(true);
-            });
-        } else {
-
-            let requestPackage = {
-                mode: mode,
-                code: input,
-                test: 'no'
+            else {
+                indexValue = jsonObj.reasoning
             }
+        }
+        console.log(indexValue)
+        return indexValue;
 
-             let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+      }
 
-             //  let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
-             console.log(urlstring)
-             setShowLoader(true)
-             axios.get(urlstring)
-             .then((data) => { 
-                 console.log(data.data)
-                 setShowOutput(true);
-                 setShowLoader(false);
-                 // setEvaluationResult(true)
-                 let isValid = data.data.valid
-                 if(isValid == 'valid')
-                     { 
-                         setValidCode(true)
-                         if(mode=='Python'){
-                            run()
-                        } else {
-                            runPython(data.data.code)
-                        }
-                        
-                         setEvaluationResult(data.data.reasoning)
-                 } else {
-                     setValidCode(false)
-                     setEvaluationResult(data.data.reasoning)
-                 }
-                 
-             })
-             .catch(error => {
-                console.log(error)
-                setShowLoader(false)
+      const handleSubmitCode = (event) => {
+        console.log('hello')
+       setshowPError(false)
+       if(input=='') {} else {
+            if(showQuestion == true) {
+                let requestPackage = {
+                    mode: mode,
+                    code: input,
+                    marks: practiceQ[practiceTestCount].Marks,
+                    topic: practiceQ[practiceTestCount].Topic,
+                    test: 'yes'
+                }
+                console.log(practiceQ[practiceTestCount])
+                let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+                // let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+                console.log(urlstring)
+                setShowLoader(true)
+                axios.get(urlstring)
+                .then((data) => { 
+                    // console.log(data.data)
+                    setShowOutput(true);
+                    setShowLoader(false);
+                    let resObj = convertToJSON(data.data)
 
-                setshowPError(true)
-                setShowOutput(true);
-            });
-            
+                    // setEvaluationResult(true)
+                    let isValid = resObj.valid
+                    if(isValid == 'valid')
+                        { 
+                            setValidCode(true)
+                            if(mode=='Python'){
+                                run()
+                            } else {
+                                runPython(resObj.code)
+                            }
+                            
+                            setEvaluationResult(indexChecker('Reasoning',resObj))
+
+                            marks.push(resObj.marks)
+                    } else {
+                        console.log('here invalid')
+                        setValidCode(false)
+                        setEvaluationResult(indexChecker('Reasoning',resObj))
+
+                    }
+                    
+                })
+                .catch(error => {
+                    console.log(error)
+                    setShowLoader(false)
+                    setshowPError(true)
+                    setShowOutput(true);
+                });
+            } else {
+
+                let requestPackage = {
+                    mode: mode,
+                    code: input,
+                    test: 'no'
+                }
+
+                 let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+
+                // let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+                console.log(urlstring)
+                setShowLoader(true)
+                axios.get(urlstring)
+                .then((data) => { 
+                    console.log(data.data)
+                    setShowOutput(true);
+                    setShowLoader(false);
+                    let resObj = convertToJSON(data.data)
+                    // setEvaluationResult(true)
+                    let isValid = resObj.valid
+                    console.log("meow1 " + typeof(resObj))
+                    console.log("meow2 " + JSON.stringify(resObj))
+
+
+                    if(isValid == 'valid')
+                        { 
+                            setValidCode(true)
+                            if(mode=='Python'){
+                                run()
+                            } else {
+                                runPython(resObj.code)
+                            }
+
+                            setEvaluationResult(indexChecker('Reasoning',resObj))
+
+                            
+                            
+                    } else {
+                        // console.log("meow " + resObj.Reasoning)
+                        setValidCode(false)
+                        setEvaluationResult(indexChecker('Reasoning',resObj))
+                    }
+                    
+                })
+                .catch(error => {
+                    console.log(error)
+                    setShowLoader(false)
+
+                    setshowPError(true)
+                    setShowOutput(true);
+                });
+                
+            } 
         }
       };
 
@@ -512,6 +555,7 @@ print(int(x)+int(y))
 
         if(practiceStatus=='Practice')
             {
+                setPracticeActive(true)
                 // setShowQuestion(true)
                 let urlstring = `https://ai-api-alpha.vercel.app/api/get_practice_questions?q=1`
                 // let urlstring = `http://localhost:3000/api/get_practice_questions?q=1`
@@ -528,8 +572,17 @@ print(int(x)+int(y))
                     currentPracticeQ(data.data.message)
                     
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    console.log(error)
+                    setShowLoader(false)
+                    setshowPError(true)
+                    setShowOutput(true);
+                    setPracticeActive(false);
+                });
         } else {
+
+            setPracticeActive(false)
+            setPracticeStatus('Practice')
 
         }
 
@@ -797,7 +850,7 @@ print(int(x)+int(y))
                         <Button  onClick={handleStartPractice}>{practiceStatus}</Button>
                         {/* testStarted && <Button>Template</Button> */}
                         {/* testStarted && <Button>Outline</Button> */}
-                        { <Button onClick={handleNPracticeQ}>Next</Button>}
+                        { practiceActive && <Button onClick={handleNPracticeQ}>Next</Button>}
                         </ButtonGroup>
                     </Grid>
                     <Grid xs={12}>

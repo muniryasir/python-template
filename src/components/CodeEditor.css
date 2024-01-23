@@ -45,6 +45,7 @@
     padding: 0.5em 1em;
     width: 20em;
     height: 20em;
+    text-wrap: balance;
 }
 
 .loaderC {
@@ -66,6 +67,8 @@
     padding: 0.5em 1em;
     width: 20em;
     height: 20em;
+    text-wrap: balance;
+
 }
 
 .icon-button {

@@ -61,18 +61,26 @@ const config = {
 
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-        ({
+        (
+            
+            {
             // set this - Replace with your project's social card
             image: 'img/logo.svg',
+            defaultMode: 'Dark',
             docs: {
                 sidebar: {
                     hideable: true,
                 }
             },
+            colorMode: {
+                defaultMode: 'dark',
+                disableSwitch: true,
+                // respectPrefersColorScheme: false,
+              },
             // set this – navbar items
             // See: https://docusaurus.io/docs/api/themes/configuration#navbar
             navbar: {
-                title: 'Python IDE',  // set this
+                title: 'Codee',  // set this
                 logo: {
                     alt: 'My Site Logo',
                     src: 'img/logo.svg',
