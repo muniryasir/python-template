@@ -10,7 +10,7 @@ h1 {
 }
 
 .heroContainer {
-    margin: 5em 0;
+    /* margin: 5em 0; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,9 +53,9 @@ h1 {
         margin: 0;
     }
 
-    .heroContainer {
+    /* .heroContainer {
         margin: 2em 1.5em;
-    }
+    } */
 
     .tagline {
         font-size: 1em;

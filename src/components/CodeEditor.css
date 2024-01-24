@@ -42,9 +42,19 @@
     border: var(--divider-color-alt) solid 1px;
     border-top: var(--divider-color) solid 1px;
     border-radius: 0 0 .25em .25em;
-    padding: 0.5em 1em;
-    width: 20em;
-    height: 20em;
+    /* padding: 0.5em 1em; */
+    width: 30em;
+    height: 30em;
+    text-wrap: balance;
+}
+
+.output-window-out {
+    border: var(--divider-color-alt) solid 1px;
+    border-top: var(--divider-color) solid 1px;
+    border-radius: 0 0 .25em .25em;
+    /* padding: 0.5em 1em; */
+    width: 23em;
+    height: 30em;
     text-wrap: balance;
 }
 
@@ -64,9 +74,9 @@
     border: var(--divider-color-alt) solid 1px;
     border-top: var(--divider-color) solid 1px;
     border-radius: 0 0 .25em .25em;
-    padding: 0.5em 1em;
-    width: 20em;
-    height: 20em;
+    /* padding: 0.5em 1em; */
+    width: 25em;
+    height: 30em;
     text-wrap: balance;
 
 }

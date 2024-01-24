@@ -125,6 +125,7 @@ export default function CodeEditorC(props) {
     const [practiceQ, setPracticeQ] = useState([])
     const [practiceQuestion, setPracticeQuestion] = useState('')
     const [showPError, setshowPError] = useState(false)
+    const [showPracticeResult, setshowPracticeResult] = useState(false)
 
 
     useEffect(() => {
@@ -192,11 +193,12 @@ export default function CodeEditorC(props) {
       const handleSubmitCode = (event) => {
         console.log('hello')
        setshowPError(false)
+       setshowPracticeResult(false)
        if(input=='') {} else {
             if(showQuestion == true) {
                 let requestPackage = {
                     mode: mode,
-                    code: input,
+                    code: input.replace('+', "plus_plus"),
                     marks: practiceQ[practiceTestCount].Marks,
                     topic: practiceQ[practiceTestCount].Topic,
                     test: 'yes'
@@ -245,7 +247,7 @@ export default function CodeEditorC(props) {
 
                 let requestPackage = {
                     mode: mode,
-                    code: input,
+                    code: input.replace('+', "plus_plus"),
                     test: 'no'
                 }
 
@@ -583,6 +585,9 @@ print(int(x)+int(y))
 
             setPracticeActive(false)
             setPracticeStatus('Practice')
+            setShowQuestion(false)
+            // setshowPracticeResult(true)
+            
 
         }
 
@@ -709,26 +714,57 @@ print(int(x)+int(y))
         )
     }
 
+    function compileAndDisplayResult() {
+
+        
+        const result = document.createElement("pre");
+        let sum = 0
+
+        for(let x=0; x<marks.length-1; x++) {
+
+            let span = document.createElement("span");
+             let node = document.createTextNode("Q"+x+" ----- "+marks[x]);
+            sum = sum + marks[x]
+             span.appendChild(node);
+            result.appendChild(span);
+
+        }
+
+        let span = document.createElement("span");
+        let node = document.createTextNode("Total ----- "+sum);
+       span.appendChild(node);
+       result.appendChild(span);
+
+        return result
+    }
+
     function output() {
+        let classOut = ''
+        if(showQuestion) {
+            classOut = "output-window-out"
+        } else {
+            classOut = "output-window"
+        }
         return (
             // <Grid container >
             //     <Grid xs={12}> 
             <div>              
-                    {(!showResults && validCode) && <pre className={"output-window"}>
+                    {(!showResults && validCode) && <pre className={classOut}>
                          
                         <span>{stdout}</span>
                         <span>{evaluationResult}</span>
                         <span style={{color: "var(--text-code-error)"}}>{stderr}</span> 
                     </pre>}
-                    {(!showResults && !validCode) && <pre className={"output-window"}>
+                    {(!showResults && !validCode) && <pre className={classOut}>
                          
                          <span>{evaluationResult}</span>
                          {/* <span style={{color: "var(--text-code-error)"}}>{stderr}</span>  */}
                     </pre>}
-                    {showResults && <pre className={"output-window"}>
+                    {showResults && <pre className={classOut}>
                         <ResultCard />
                     </pre>} 
-                    {showPError && <pre className={"output-window"}>
+                    {showPracticeResult && compileAndDisplayResult()}
+                    {showPError && <pre className={classOut}>
                     <span>Could Not Process, please try again</span>
                     </pre>} 
 
@@ -800,12 +836,13 @@ print(int(x)+int(y))
     }
 
     function CodeBox() {
+   
         return (
             <Grid container spacing={1}>
       <Grid xs={3}>
         {showOutput && question()}
         </Grid>
-        <Grid xs={5} style={{width: "50%"}}>
+        <Grid xs={5} style={{width: '50%'}}>
         {/* {!testStarted && <Stack direction="row" spacing={2}>
                   <Item id="1" onClick={handleItemClick}>Example 1</Item>
                   <Item id="2" onClick={handleItemClick}>Example 2 </Item>
@@ -831,6 +868,13 @@ print(int(x)+int(y))
 
 
     const fallback = <pre style={{margin: 0, padding: "0.55rem"}}>{input}</pre>;
+
+    let width = ''
+    if(showQuestion) {
+        width = '40%'
+    } else {
+        width = '50%'
+    }
     
     return <BrowserOnly fallback={fallback}>
         {() => (
@@ -858,7 +902,7 @@ print(int(x)+int(y))
                             <Grid xs={3}>
                                 {showQuestion && question()}
                                 </Grid>
-                                <Grid xs={5} style={{width:"50%"}}>
+                                <Grid xs={5} style={{width:width}}>
                                 {/* {!testStarted && <Stack direction="row" spacing={2}>
                                         <Item id="1" onClick={handleItemClick}>Example 1</Item>
                                         <Item id="2" onClick={handleItemClick}>Example 2 </Item>
