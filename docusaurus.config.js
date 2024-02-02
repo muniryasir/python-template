@@ -79,40 +79,40 @@ const config = {
               },
             // set this – navbar items
             // See: https://docusaurus.io/docs/api/themes/configuration#navbar
-            navbar: {
-                title: 'Codee',  // set this
-                logo: {
-                    alt: 'My Site Logo',
-                    src: 'img/logo.svg',
-                },
-                /*
-                items: [
-                    // {
-                    //     type: 'doc',
-                    //     docId: 'intro',  // set this to your main docs page name
-                    //     position: 'left',
-                    //     label: 'Get Started',
-                    // },
-                    // {
-                    //     href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
-                    //     label: 'GitHub',
-                    //     position: 'right',
-                    // },
-                    {
-                        to: '/',
-                        label: 'Python'
-                    },
-                    {
-                        to: '/ocr',
-                        label: 'OCR'
-                    },
-                    {
-                        to: '/pseudo',
-                        label: 'Pseudo'
-                    },
-                    Registeration()
-                ], */
-            },
+            // navbar: {
+            //     title: 'Codee',  // set this
+            //     logo: {
+            //         alt: 'My Site Logo',
+            //         src: 'img/logo.svg',
+            //     },
+            //     /*
+            //     items: [
+            //         // {
+            //         //     type: 'doc',
+            //         //     docId: 'intro',  // set this to your main docs page name
+            //         //     position: 'left',
+            //         //     label: 'Get Started',
+            //         // },
+            //         // {
+            //         //     href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
+            //         //     label: 'GitHub',
+            //         //     position: 'right',
+            //         // },
+            //         {
+            //             to: '/',
+            //             label: 'Python'
+            //         },
+            //         {
+            //             to: '/ocr',
+            //             label: 'OCR'
+            //         },
+            //         {
+            //             to: '/pseudo',
+            //             label: 'Pseudo'
+            //         },
+            //         Registeration()
+            //     ], */
+            // },
             // set this – to the links you want
             // See: https://docusaurus.io/docs/api/themes/configuration#footer-1
             // footer: {

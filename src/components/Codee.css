@@ -1,0 +1,150 @@
+.leftCell {
+    height: 100vh;
+    width: 100%;
+    background: rgba(255,255,255,1);
+    overflow: scroll;
+}
+.rightCell {
+    height: 100vh;
+    width: 100%;
+    background: rgba(6,55,93,1);
+    
+}
+
+.welcomeText {
+    /* width: 497px; */
+    color: rgba(231,248,255,1);
+    position: absolute;
+    /* top: 0px; */
+    /* left: 0px; */
+    font-family: Arial;
+    
+    opacity: 1;
+    text-align: center;
+    /* margin-top: 30vh; */
+    /* width: 100%; */
+    height: 100%;
+}
+
+.welcomeText .greetings {
+    font-weight: Bold;
+    font-size: 45px;
+}
+
+.welcomeText .message {
+    font-weight: Bold;
+    font-size: 28px;
+}
+
+.categoryTitle {
+    color: rgba(18,37,64,1);
+    position: relative;
+  
+    font-family: Arial;
+    font-weight: Bold;
+    font-size: 24px;
+    opacity: 1;
+    text-align: left;
+    padding-left: 5%;
+}
+
+.categoryMsg {
+    color: rgba(18,37,64,1);
+    position: relative;
+    
+    font-family: Arial;
+    font-weight: Regular;
+    font-size: 16px;
+    opacity: 1;
+    text-align: left;
+    padding-left: 5%;
+}
+
+.practiceMenu {
+    color: rgba(18,37,64,1);
+    /* background-color: black; */
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.catBtn {
+    background-color:  rgba(18,37,64,1);
+}
+
+.questionLabel {
+    
+    position: relative;
+    font-family: Arial;
+    font-weight: bold;
+    opacity: 1;
+    text-align: center;
+    /* margin-top: 30vh; */
+    background-color: rgba(18,37,64,1);
+    width: 30%;
+    /* height: 10%; */
+    text-align: center;
+    /* padding-top: 0.5%; */
+    border: 1px solid rgba(18,37,64,1);
+    padding: 0.5%;
+     border-radius: 3px;
+}
+
+.questionTitle {
+    position: relative;
+    font-family: Arial;
+    font-weight: bold;
+    color: rgba(18,37,64,1);
+}
+
+.questionText {
+    position: relative;
+    font-family: Arial;
+    font-weight: Regular;
+    color: rgba(18,37,64,1);
+}
+
+.Ceditor {
+    margin: 0 0 var(--ifm-leading);
+    border-radius: 0.25em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.07);
+    width: 100%;
+    height: 100%;
+
+}
+
+.Ceditor-window {
+    overflow: clip;
+    border-radius: 0.25em;
+    background-color: var(--code-background);
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.codeFeedback {
+    padding: 2%;
+    text-align: left;
+    height: 50%;
+    background: rgba(255,255,255,1);
+    overflow: scroll;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.codeOutput {
+    padding: 2%;
+    text-align: left;
+    height: 50%;
+    background: rgba(255,255,255,1);
+    overflow: scroll;
+}
+
+.btnContainer {
+    position: absolute;
+    bottom: 0.3em;
+    left: 0.5em;
+    display: flex;
+    gap: 0.5em;
+    opacity: 0;
+}

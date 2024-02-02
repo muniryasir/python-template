@@ -7,7 +7,7 @@ import Codee from '../components/Codee';
 
 
 
-export default function Home() {
+export default function CodeePage() {
 
     return (
         <Layout title="Python IDE">
