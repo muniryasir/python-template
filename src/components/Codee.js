@@ -33,6 +33,7 @@ import {usePython} from "react-py";
 import axios from "axios";
 import DisplayLoader from './DisplayLoader';
 
+const base_url = 'https://staging-codee.highersummit.com'
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -251,8 +252,9 @@ const handleSubmitCode = (event) => {
               test: 'yes'
           }
           console.log(PracticeQuestionsList[questionIndex])
-          let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+          // let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
           // let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+          let urlstring = `${base_url}/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
           console.log(urlstring)
           setShowLoader(true)
           axios.get(urlstring)
@@ -299,9 +301,10 @@ const handleSubmitCode = (event) => {
               test: 'no'
           }
 
-           let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+          //  let urlstring = `https://ai-api-alpha.vercel.app/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
 
           // let urlstring = `http://localhost:3000/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
+          let urlstring = `${base_url}/api/evaluate_code?question=${JSON.stringify(requestPackage)}`
           console.log(urlstring)
           setShowLoader(true)
           axios.get(urlstring)
